@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chatbot Example</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #chatbox {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+  .chat-user {
+    text-align: right;
+    color: blue;
+  }
+  
+  .chat-assistant {
+    text-align: left;
+    color: green;
+  }
+  
+  #chat-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  #chat-input {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    margin-right: 10px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+    </style>
+  </head>
+  <body>
+    <div id="chat-widget">
+      <div id="chatbox"></div>
+      <form id="chat-form">
+        <input type="text" id="chat-input" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <script src="chatbot.js"></script>
+    <script>
+      // Define the chat form submission handler
+function handleChatFormSubmit(event) {
+  // Prevent the form from submitting
+  event.preventDefault();
+
+  // Get the chat input
+  var chatInput = document.getElementById("chat-input");
+
+  // Get the previous questions and answers from local storage
+  var previousQuestionsAndAnswers =
+    JSON.parse(localStorage.getItem("previousQuestionsAndAnswers")) || [];
+
+  // Get the new question from the chat input
+  var newQuestion = chatInput.value;
+
+  // Call the chatbot function with the previous questions and answers and the new question
+  chatbot(previousQuestionsAndAnswers, newQuestion);
+
+  // Clear the chat input
+  chatInput.value = "";
+
+  // Save the previous questions and answers to local storage
+  localStorage.setItem(
+    "previousQuestionsAndAnswers",
+    JSON.stringify(previousQuestionsAndAnswers)
+  );
+}
+document.getElementById("chat-form").addEventListener("submit", handleChatFormSubmit);
+
+    </script>
+  </body>
+</html>
+
